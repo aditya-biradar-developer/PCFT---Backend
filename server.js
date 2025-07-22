@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // CORS middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'https://pcft-frontend.onrender.com/'],
   credentials: true
 }));
 
