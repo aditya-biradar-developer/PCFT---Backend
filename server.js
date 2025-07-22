@@ -19,24 +19,27 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// CORS middleware
+// ✅ CORS middleware (for both local and deployed frontend)
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'https://pcft-frontend.onrender.com/'],
+  origin: [
+    'http://localhost:5173',             // Vite local dev
+    'http://localhost:3000',             // Create React App local dev
+    'https://pcft-frontend.onrender.com' // Render deployed frontend
+  ],
   credentials: true
 }));
 
-// Routes
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/income', incomeRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/goals', goalRoutes);
 app.use('/api/community', communityRoutes);
 
-// Error handling middleware
+// Global error handler
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode ? res.statusCode : 500;
-  res.status(statusCode);
-  res.json({
+  res.status(statusCode).json({
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
@@ -45,5 +48,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`✅ Server running on port ${PORT}`);
 });
